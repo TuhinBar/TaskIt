@@ -8,37 +8,40 @@ const taskSchema = new mongoose.Schema(
       default: uuidv4,
       required: true,
     },
-    title: {
+    teamName: {
       type: String,
       required: true,
     },
-    description: {
+    teamTagline: {
       type: String,
+      required: true,
     },
-    dueDate: {
-      type: Date,
-    },
-    status: {
-      type: String,
-      enum: ["Pending", "Completed"],
-      default: "Pending",
-    },
-    createdBy: {
+    teamOwner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
-    assignedTo: [
+    memebers: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        memberId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        memberEmail: {
+          type: String,
+        },
+        memberRole: {
+          type: String,
+          enum: ["Admin", "Member"],
+          default: "Member",
+        },
       },
     ],
-    team: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Team",
-      required: true,
-    },
+    tasks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Task",
+      },
+    ],
   },
   {
     timestamps: true,
