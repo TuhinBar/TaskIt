@@ -24,6 +24,28 @@ const userSchema = new mongoose.Schema(
         ref: "Task",
       },
     ],
+    teams: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Team",
+      },
+    ],
+
+    invitations: [
+      {
+        teamId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Team",
+        },
+        teamName: {
+          type: String,
+        },
+        invitationFrom: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
