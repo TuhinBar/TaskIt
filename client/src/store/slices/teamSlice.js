@@ -14,7 +14,7 @@ const teamSlice = createSlice({
   initialState,
   reducers: {
     setTeam: (state, action) => {
-      state.teams = action.payload;
+      state.singleTeam = action.payload;
     },
     clearTeam: (state, action) => {
       state.teams = null;
@@ -49,6 +49,7 @@ const teamSlice = createSlice({
       state.error = null;
       console.log("Get All Teams Success", action.payload.teams);
       state.teams = action.payload.teams;
+      state.singleTeam = action.payload.teams[0];
       console.log(state);
       console.log("Get All Teams Success", action.payload);
     });

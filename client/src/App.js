@@ -11,15 +11,17 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Login/>} />
+      <Route path="/signup" element={<Login />} />
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/dashboard" element={<h1>dashboard</h1>} />
         <Route
           path="/teams"
-          element={<Navigate to={`/teams/${firstTeamId}`} />}
+          element={<Navigate to={`/teams/${firstTeamId}?tab=tasks`} />}
         />
         <Route path="/teams/:slug" element={<Teams />} />
+        {/* I want to get queries and serve the same component */}
+        <Route path="/teams/:slug/*" element={<Teams />} />
       </Route>
     </Routes>
   );

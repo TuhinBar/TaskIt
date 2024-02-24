@@ -9,6 +9,7 @@ import { createTeam, getAllTeams } from "../../store/features/teamAction";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { setTeam } from "../../store/slices/teamSlice";
 
 const QuickAccessBar = () => {
   const { slug } = useParams();
@@ -69,7 +70,10 @@ const QuickAccessBar = () => {
           teams.map((team, index) => (
             <div
               key={index}
-              onClick={() => navigate(`/teams/${team._id}`)}
+              onClick={() => {
+                dispatch(setTeam(team));
+                navigate(`/teams/${team._id}?tab=tasks`);
+              }}
               className={
                 slug === team._id ? classes.teamNamesActive : classes.teamNames
               }

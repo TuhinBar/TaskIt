@@ -45,17 +45,24 @@
   border-radius: 10px;
 }
 
+.createForm form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
 .inputDiv {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 100%;
+  /* width: 100%; */
   gap: 0.5rem;
   /* margin: 1rem; */
 }
 
 .inputDiv input {
-  /* width: 100%; */
+  width: 100%;
   border: 1px solid var(--primary-color);
   padding: 10px;
 
