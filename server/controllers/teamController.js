@@ -29,11 +29,12 @@ const createTeam = async (req, res) => {
     let user = await User.findById(ownerId);
     user.teams.push(team._id);
     await user.save();
+    console.log("team created ==> ✔");
     res
       .status(201)
       .json({ team, owner: user, message: "Team created", success: true });
   } catch (error) {
-    console.log(error);
+    console.log("create team error", error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -117,4 +118,32 @@ const inviteMember = async (req, res) => {
   }
 };
 
-module.exports = { createTeam, inviteMember };
+const getTeams = async (req, res) => {
+  try {
+    const user = req.user;
+    const teams = await Team.find({
+      members: { $elemMatch: { memberId: user._id } },
+    });
+
+    console.log("getTeams ==> ✔", teams?.length);
+
+    res.status(200).json({ teams, success: true });
+  } catch (error) {
+    console.log("getTeams error", error);
+    res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+const getMyTeams = async (req, res) => {
+  try {
+    const user = req.user;
+    const teams = await Team.find({ teamOwner: user._id });
+    console.log("getMyTeams ==> ✔", teams?.length);
+    res.status(200).json({ teams, success: true });
+  } catch (error) {
+    console.log("getMyTeams error", error);
+    res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+module.exports = { createTeam, inviteMember, getTeams, getMyTeams };

@@ -148,11 +148,13 @@ const updateInvitation = async (req, res) => {
       if (!team) {
         return res.status(400).json({ message: "Team not found" });
       }
+      console.log("Invitation updated ==> ✔");
       res
         .status(200)
         .json({ message: "Invitation rejected successfully", success: true });
     }
   } catch (error) {
+    console.log("updateInvitation error", error);
     res.status(500).json({ message: error.message, success: false });
   }
 };
