@@ -4,6 +4,9 @@ import { ToastContainer, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { fetchOwnerLocal } from "./Utils/fetchUser";
+import Sidebar from "./Componnets/Sidebar/Sidebar";
+
+import classes from "./Layout.module.css";
 
 const Layout = () => {
   let navigate = useNavigate();
@@ -19,11 +22,9 @@ const Layout = () => {
   }, [navigate]);
 
   return (
-    <main>
-      <h1>This will be here always</h1>
-      {/* <SideBar /> */}
-      <div>
-        {/* <Navbar /> */}
+    <main className={classes.mainContainer}>
+      <Sidebar />
+      <div className={classes.bodyContainer}>
         <Outlet />
       </div>
 
