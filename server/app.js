@@ -9,6 +9,7 @@ const cors = require("cors");
 const PORT = process.env.PORT || 5000;
 const userRoutes = require("./routes/users.route");
 const taskRoutes = require("./routes/tasks.route");
+const teamRoutes = require("./routes/teams.route");
 
 app.use(
   cors({
@@ -31,3 +32,4 @@ app.use(cookieParser());
 
 app.use("/api/users", userRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/teams", teamRoutes);

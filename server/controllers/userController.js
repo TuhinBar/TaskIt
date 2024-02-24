@@ -1,4 +1,5 @@
 const User = require("../models/User.model");
+const Team = require("../models/Team.model");
 const validator = require("validator");
 const { generateToken, decodeToken } = require("../utils/jwtutils");
 const bcrypt = require("bcrypt");
@@ -93,4 +94,67 @@ const getUser = async (req, res) => {
   res.status(200).json({ success: true, user });
 };
 
-module.exports = { register, login, getUser };
+const updateInvitation = async (req, res) => {
+  try {
+    const { teamId, accept } = req.body;
+    const user = req.user;
+    if (!teamId || accept === undefined) {
+      return res.status(400).json({ message: "Please enter all fields" });
+    }
+    if (accept) {
+      const team = await Team.findByIdAndUpdate(
+        teamId,
+        {
+          $push: {
+            members: {
+              memberId: user._id,
+              memberEmail: user.email,
+            },
+          },
+          $set: { "invitations.$[elem].status": "Accepted" },
+        },
+        { arrayFilters: [{ "elem.inviteTo": user.email }] }
+      );
+      const member = await User.findByIdAndUpdate(
+        user?._id,
+        {
+          $set: { "invitations.$[elem].status": "Accepted" },
+        },
+        { arrayFilters: [{ "elem.teamId": team._id }] }
+      );
+
+      if (!team) {
+        return res.status(400).json({ message: "Team not found" });
+      }
+      res
+        .status(200)
+        .json({ message: "Invitation accepted successfully", success: true });
+    } else {
+      const team = await Team.findByIdAndUpdate(
+        teamId,
+        {
+          $set: { "invitations.$[elem].status": "Rejected" },
+        },
+        { arrayFilters: [{ "elem.inviteTo": user.email }] }
+      );
+      const member = await User.findByIdAndUpdate(
+        user?._id,
+        {
+          $set: { "invitations.$[elem].status": "Rejected" },
+        },
+        { arrayFilters: [{ "elem.teamId": team._id }] }
+      );
+
+      if (!team) {
+        return res.status(400).json({ message: "Team not found" });
+      }
+      res
+        .status(200)
+        .json({ message: "Invitation rejected successfully", success: true });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message, success: false });
+  }
+};
+
+module.exports = { register, login, getUser, updateInvitation };
