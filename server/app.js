@@ -5,7 +5,17 @@ const express = require("express");
 const app = express();
 const cookieParser = require("cookie-parser");
 const connectDB = require("./configs/connectDB");
+const cors = require("cors");
 const PORT = process.env.PORT || 5000;
+const userRoutes = require("./routes/users.route");
+const taskRoutes = require("./routes/tasks.route");
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 app.use(cookieParser());
@@ -14,11 +24,10 @@ app.use(cookieParser());
 
 (async () => {
   await connectDB();
-  app.listen(5000, () => {
+  app.listen(PORT, () => {
     console.log("Server is running on port 5000");
   });
 })();
 
-app.get("/", (req, res) => {
-  res.json({ message: "API running..." });
-});
+app.use("/api/users", userRoutes);
+app.use("/api/tasks", taskRoutes);

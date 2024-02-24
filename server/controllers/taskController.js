@@ -9,4 +9,4 @@ const updateTask = async (req, res) => {};
 
 const deleteTask = async (req, res) => {};
 
-module.exports = { createTask, getTasks, getTask, updateTask, deleteTask };
+module.exports = { createTask, getTasks, updateTask, deleteTask };

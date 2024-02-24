@@ -3,9 +3,13 @@
 :root {
   --primary-color: #7f27ff;
   --secondary-color: #ff2e63;
+  --light-color: #f4f4f4;
 }
 
-body {
+body,
+*,
+h1,
+p {
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;

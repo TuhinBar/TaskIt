@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const checkAuth = require("../utils/checkAuth");
 const {
   createTask,
   getTasks,
@@ -8,7 +9,9 @@ const {
 
 router
   .route("/")
-  .post(createTask)
-  .get(getTasks)
-  .put(updateTask)
-  .delete(deleteTask);
+  .post(checkAuth, createTask)
+  .get(checkAuth, getTasks)
+  .put(checkAuth, updateTask)
+  .delete(checkAuth, deleteTask);
+
+module.exports = router;

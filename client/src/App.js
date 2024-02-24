@@ -1,9 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
+import Login from "./Pages/Login/index";
 
 function App() {
   return (
     <Routes>
+      <Route path="/login" element={<Login />} />
       <Route path="/" element={<Layout />}>
         <Route path="/" element={<h1>API running...</h1>} />
         <Route path="/tasks" element={<h1>Not Found</h1>} />
