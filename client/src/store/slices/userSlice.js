@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login } from "../features/userActions";
+import { login,signup } from "../features/userActions";
 import { fetchOwnerLocal } from "../../Utils/fetchUser";
 
 const initialState = {
@@ -45,6 +45,26 @@ const userSlice = createSlice({
       state.error = action.payload?.message;
       state.success = false;
     });
+    builder.addCase(signup.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    }); 
+    builder.addCase(signup.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+      state.user = action.payload.user;
+      console.log("Signup Success", action.payload);
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+    });
+    builder.addCase(signup.rejected, (state, action) => {
+      console.log("Signup Failed", action.payload);
+      state.loading = false;
+      state.error = action.payload?.message;
+      state.success = false;
+    });
+    
   },
 });
 

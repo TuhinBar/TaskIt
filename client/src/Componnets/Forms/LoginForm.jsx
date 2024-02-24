@@ -16,7 +16,6 @@ const LoginForm = (props) => {
     <div>
       <form className={classes.form} onSubmit={props.onSubmit}>
         <div className={classes.inputtags}>
-          {/* <label htmlFor="email">Username</label> */}
           <FaRegUser className={classes.icons} />
           <input
             className={classes.input}
@@ -27,7 +26,6 @@ const LoginForm = (props) => {
           />
         </div>
         <div>
-          {/* <label htmlFor="password">Password</label> */}
           <MdOutlineLock className={classes.icons} />
           <input
             className={classes.input}
