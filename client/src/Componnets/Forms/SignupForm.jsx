@@ -42,7 +42,7 @@ export const SignupForm = (props) => {
             className={classes.input}
             placeholder="Confirm Password"
             type={showVisibleText ? "text" : "password"}
-            name="passWord"
+            name="confirmPassword"
             id="password"
           />
           {showVisibleText ? (

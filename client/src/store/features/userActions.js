@@ -13,3 +13,16 @@ export const login = createAsyncThunk(
     }
   }
 );
+
+export const signup = createAsyncThunk(
+  "user/signup",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await axios.post("/users/register", data);
+      return response.data;
+    } catch (error) {
+      console.log("Signup Failed", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);  

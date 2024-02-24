@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Slide, ToastContainer, toast } from "react-toastify";
 import LoginForm from "../../Componnets/Forms/LoginForm";
-import { login } from "../../store/features/userActions";
+import { login, signup } from "../../store/features/userActions";
 import { userSelector } from "../../store/store";
 import classes from "./Login.module.css";
 import { useLocation } from "react-router-dom";
@@ -18,13 +18,13 @@ const Login = (props) => {
 
   useEffect(() => {
     if (user) {
-      navigate("/tasks");
+      navigate("/teams");
     }
   }, [user, navigate]);
   useEffect(() => {
     if (success) {
       toast.success(`Welcome back! ${user.userName}`);
-      navigate("/tasks");
+      navigate("/teams");
     }
     if (error) {
       toast.error(error);
@@ -41,6 +41,22 @@ const Login = (props) => {
     };
     dispatch(login(data));
   };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = {
+      userName: formData.get("userName"),
+      passWord: formData.get("passWord"),
+      confirmPassword: formData.get("confirmPassword"),
+    };
+    if (data.passWord !== data.confirmPassword) {
+      toast.error("Passwords does not match");
+      return;
+    }
+    dispatch(signup(data));
+  };
+
   return (
     <div className={classes.container}>
       <div className={classes.loginDivImg}>
@@ -69,7 +85,7 @@ const Login = (props) => {
       ) : (
         <div className={classes.loginForm}>
           <h2>Signup</h2>
-          <SignupForm onSubmit={handleLogin} />
+          <SignupForm onSubmit={handleSignup} />
           <p>
             Already have an account? <Link to="/login">Click here</Link>
           </p>
