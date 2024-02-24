@@ -13,3 +13,16 @@ export const createTeam = createAsyncThunk(
     }
   }
 );
+
+export const getAllTeams = createAsyncThunk(
+  "team/getAll",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get("/teams/all-teams");
+      return response.data;
+    } catch (error) {
+      console.log("Get All Teams Failed", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);

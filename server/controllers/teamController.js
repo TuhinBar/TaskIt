@@ -121,6 +121,7 @@ const inviteMember = async (req, res) => {
 const getTeams = async (req, res) => {
   try {
     const user = req.user;
+    console.log("getTeams ==> ✔", user);
     const teams = await Team.find({
       members: { $elemMatch: { memberId: user._id } },
     });
