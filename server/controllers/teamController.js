@@ -4,7 +4,7 @@ const Team = require("../models/Team.model");
 
 const createTeam = async (req, res) => {
   try {
-    const { teamName, teamTagline } = req.body;
+    let { teamName, teamTagline } = req.body;
 
     if (!teamTagline) {
       teamTagline = "";
@@ -15,6 +15,7 @@ const createTeam = async (req, res) => {
     }
 
     const ownerId = req.user._id;
+    console.log(ownerId);
 
     const team = new Team({
       teamName,
@@ -25,13 +26,14 @@ const createTeam = async (req, res) => {
       ],
     });
     await team.save();
-    const user = await User.findById(ownerId);
+    let user = await User.findById(ownerId);
     user.teams.push(team._id);
     await user.save();
     res
       .status(201)
       .json({ team, owner: user, message: "Team created", success: true });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

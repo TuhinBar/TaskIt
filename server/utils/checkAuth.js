@@ -2,6 +2,7 @@ const { decodeToken } = require("./jwtutils");
 
 const checkAuth = (req, res, next) => {
   const token = req.cookies.authToken;
+  // console.log(token);
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
@@ -11,8 +12,8 @@ const checkAuth = (req, res, next) => {
     if (!decodedToken) {
       return res.status(401).json({ message: "Unauthorized" });
     }
-
-    req.user = decodedToken;
+    // console.log(decodedToken);
+    req.user = decodedToken.id;
   }
   next();
 };
