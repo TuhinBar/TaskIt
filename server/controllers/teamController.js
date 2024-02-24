@@ -88,11 +88,29 @@ const inviteMember = async (req, res) => {
         .json({ message: "User not found, can not invite", success: false });
     }
 
+    const updatedTeam = await Team.findByIdAndUpdate(
+      teamId,
+      {
+        $push: {
+          invitations: {
+            invitedBy: ownerId,
+            inviteTo: email,
+            status: "Pending",
+          },
+        },
+      },
+      { new: true }
+    );
+
+    console.log("invitation sent ==> ✔");
+
     res.status(200).json({
       message: "Invitation sent",
       success: true,
+      team: updatedTeam,
     });
   } catch (error) {
+    console.log("invite member error", error);
     res.status(500).json({ message: error.message, success: false });
   }
 };
