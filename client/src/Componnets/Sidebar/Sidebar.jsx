@@ -7,23 +7,24 @@ import { logout } from "../../store/slices/userSlice";
 
 const sideBarMenus = [
   {
-    name: "Overview",
+    name: "Dashboard",
     path: "/dashboard",
     icon: <MdDashboard size={25} />,
   },
+  //   {
+  //     name: "Tasks",
+  //     path: "/tasks",
+  //     icon: <MdDashboard size={25} />,
+  //   },
+
   {
-    name: "Tasks",
-    path: "/tasks",
+    name: "Teams",
+    path: "/teams",
     icon: <MdDashboard size={25} />,
   },
   {
     name: "Profile",
     path: "/profile",
-    icon: <MdDashboard size={25} />,
-  },
-  {
-    name: "Teams",
-    path: "/teams",
     icon: <MdDashboard size={25} />,
   },
 ];

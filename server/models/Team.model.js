@@ -14,7 +14,6 @@ const teamSchema = new mongoose.Schema(
     },
     teamTagline: {
       type: String,
-      required: true,
     },
     teamOwner: {
       type: mongoose.Schema.Types.ObjectId,
