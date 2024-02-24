@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
-import classes from "./Login.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import LoginForm from "../../Componnets/Forms/LoginForm";
-import { useSelector, useDispatch } from "react-redux";
-import { userSelector } from "../../store/store";
 import { login } from "../../store/features/userActions";
-import { ToastContainer, Slide } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-
-import { toast } from "react-toastify";
+import { userSelector } from "../../store/store";
+import classes from "./Login.module.css";
+import { useLocation } from "react-router-dom";
+import SignupForm from "../../Componnets/Forms/SignupForm";
 
 const Login = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const currentTab = location.pathname;
   const { success, error, user } = useSelector(userSelector);
 
   useEffect(() => {
@@ -45,20 +47,34 @@ const Login = (props) => {
         <div>
           <h1>Task It</h1>
           <p>
-            The best way to manage your tasks. <br />
+            Welcome to your task management system.
+            <br />
           </p>
         </div>
 
-        <img
+        {/* <img
           className={classes["login-img"]}
           src="https://i.imgur.com/JnNgP5S.jpeg"
           alt="Task It"
-        />
+        /> */}
       </div>
-      <div className={classes.loginForm}>
-        <h2>Welcome to Task It</h2>
-        <LoginForm onSubmit={handleLogin} />
-      </div>
+      {currentTab === "/login" ? (
+        <div className={classes.loginForm}>
+          <h2>Login</h2>
+          <LoginForm onSubmit={handleLogin} />
+          <p>
+            Don't have an account? <Link to="/signup">Click here</Link>
+          </p>
+        </div>
+      ) : (
+        <div className={classes.loginForm}>
+          <h2>Signup</h2>
+          <SignupForm onSubmit={handleLogin} />
+          <p>
+            Already have an account? <Link to="/login">Click here</Link>
+          </p>
+        </div>
+      )}
       <ToastContainer
         transition={Slide}
         position="bottom-center"

@@ -1,0 +1,44 @@
+.form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+.loginbtn{
+    padding: 0.5rem 1rem ;
+    border: 1px;
+    border-radius: 1rem;
+    width: 100%;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: var(--light-color); 
+}
+
+.input{
+    padding: 0.5rem 3rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+}
+.input:focus{
+    outline: none;
+    border: 1px solid var(--primary-color);
+}
+.icons{
+    position: absolute;
+    transform: translateX(10px) translateY(10px);
+    opacity: 0.5;
+}
+.showhidepw{
+    position: absolute;
+    transform: translateX(-30px) translateY(10px);
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .input{
+        font-size: 14px;
+    }
+}
+
+

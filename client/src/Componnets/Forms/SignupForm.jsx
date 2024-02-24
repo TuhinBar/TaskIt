@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from "./Forms.module.css";
 import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineLock } from "react-icons/md";
 import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
+import { useState } from "react";
 
-const LoginForm = (props) => {
+export const SignupForm = (props) => {
   const [showVisibleText, setShowVisibleText] = useState(false);
 
   const handleVisibleToggle = () => {
     setShowVisibleText(!showVisibleText);
   };
-
   return (
     <div>
       <form className={classes.form} onSubmit={props.onSubmit}>
         <div className={classes.inputtags}>
-          {/* <label htmlFor="email">Username</label> */}
           <FaRegUser className={classes.icons} />
           <input
             className={classes.input}
@@ -27,11 +26,21 @@ const LoginForm = (props) => {
           />
         </div>
         <div>
-          {/* <label htmlFor="password">Password</label> */}
           <MdOutlineLock className={classes.icons} />
           <input
             className={classes.input}
             placeholder="Password"
+            type="password"
+            name="passWord"
+            id="password"
+          />
+        </div>
+
+        <div>
+          <MdOutlineLock className={classes.icons} />
+          <input
+            className={classes.input}
+            placeholder="Confirm Password"
             type={showVisibleText ? "text" : "password"}
             name="passWord"
             id="password"
@@ -51,11 +60,11 @@ const LoginForm = (props) => {
           )}
         </div>
         <button className={classes.loginbtn} type="submit">
-          Login
+          Signup
         </button>
       </form>
     </div>
   );
 };
 
-export default LoginForm;
+export default SignupForm;
