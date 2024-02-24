@@ -17,6 +17,13 @@ const userSlice = createSlice({
       state.user = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
     },
+    logout: (state, action) => {
+      state.user = null;
+      localStorage.removeItem("user");
+      document.cookie =
+        "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      window.location.href = "/login";
+    },
   },
   extraReducers(builder) {
     builder.addCase(login.pending, (state, action) => {
@@ -41,5 +48,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, logout } = userSlice.actions;
 export default userSlice.reducer;
