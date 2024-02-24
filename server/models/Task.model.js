@@ -39,6 +39,10 @@ const taskSchema = new mongoose.Schema(
       ref: "Team",
       required: true,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
