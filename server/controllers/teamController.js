@@ -22,7 +22,11 @@ const createTeam = async (req, res) => {
       teamTagline,
       teamOwner: ownerId,
       members: [
-        { memberId: ownerId, memberRole: "Admin", memberEmail: req.user.email },
+        {
+          memberId: ownerId,
+          memberRole: "Admin",
+          memberUserName: req.user.userName,
+        },
       ],
     });
     await team.save();
@@ -42,8 +46,8 @@ const createTeam = async (req, res) => {
 const inviteMember = async (req, res) => {
   try {
     // this teamId is mongoId, not the uuid teamId
-    const { email, teamId } = req.body;
-    if (!email || !teamId) {
+    const { userName, teamId } = req.body;
+    if (!userName || !teamId) {
       return res.status(400).json({ message: "Please enter all fields" });
     }
     const ownerId = req.user._id;
@@ -54,7 +58,7 @@ const inviteMember = async (req, res) => {
         $push: {
           invitations: {
             invitedBy: ownerId,
-            inviteTo: email,
+            inviteTo: userName,
             status: "Pending",
           },
         },
@@ -68,7 +72,7 @@ const inviteMember = async (req, res) => {
     // add the invitation to the user model
     const invitedUser = await User.findOneAndUpdate(
       {
-        email,
+        userName,
       },
       {
         $push: {
@@ -97,7 +101,7 @@ const inviteMember = async (req, res) => {
         $push: {
           invitations: {
             invitedBy: ownerId,
-            inviteTo: email,
+            inviteTo: userName,
             status: "Pending",
           },
         },
@@ -124,7 +128,7 @@ const getTeams = async (req, res) => {
     console.log("getTeams ==> ✔", user);
     const teams = await Team.find({
       members: { $elemMatch: { memberId: user._id } },
-    });
+    }).populate("tasks");
 
     console.log("getTeams ==> ✔", teams?.length);
 

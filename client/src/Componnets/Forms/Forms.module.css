@@ -1,44 +1,117 @@
-.form{
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
 }
-.loginbtn{
-    padding: 0.5rem 1rem ;
-    border: 1px;
-    border-radius: 1rem;
-    width: 100%;
-    cursor: pointer;
-    background-color: var(--primary-color);
-    color: var(--light-color); 
+.loginbtn {
+  padding: 0.5rem 1rem;
+  border: 1px;
+  border-radius: 1rem;
+  width: 100%;
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: var(--light-color);
 }
 
-.input{
-    padding: 0.5rem 3rem;
-    border: 1px solid black;
-    border-radius: 1rem;
+.input {
+  padding: 0.5rem 3rem;
+  border: 1px solid black;
+  border-radius: 1rem;
 }
-.input:focus{
-    outline: none;
-    border: 1px solid var(--primary-color);
+.input:focus {
+  outline: none;
+  border: 1px solid var(--primary-color);
 }
-.icons{
-    position: absolute;
-    transform: translateX(10px) translateY(10px);
-    opacity: 0.5;
+.icons {
+  position: absolute;
+  transform: translateX(10px) translateY(10px);
+  opacity: 0.5;
 }
-.showhidepw{
-    position: absolute;
-    transform: translateX(-30px) translateY(10px);
-    opacity: 0.5;
-    cursor: pointer;
+.showhidepw {
+  position: absolute;
+  transform: translateX(-30px) translateY(10px);
+  opacity: 0.5;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
-    .input{
-        font-size: 14px;
-    }
+  .input {
+    font-size: 14px;
+  }
 }
 
+.createForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 500px;
+  padding: 20px;
+  background-color: var(--light-color);
+  border-radius: 10px;
+}
 
+.createForm form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.inputDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* width: 100%; */
+  gap: 0.5rem;
+  /* margin: 1rem; */
+}
+
+.inputDiv input {
+  /* width: 100%; */
+  border: 1px solid var(--primary-color);
+  padding: 10px;
+
+  border-radius: 5px;
+  outline: none;
+}
+
+.inputDiv input::placeholder {
+  font-size: 1rem;
+}
+
+.inputDiv textarea {
+  /* width: 100%; */
+  border: 1px solid var(--primary-color);
+  padding: 10px;
+
+  border-radius: 5px;
+  outline: none;
+  resize: none;
+}
+
+.inputDiv input:focus {
+  border: 1px solid var(--primary-color);
+}
+
+.inputDiv label {
+  font-size: 0.9rem;
+  color: var(--primary-color);
+}
+
+.inputDivBtn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-inline: auto;
+  margin-top: 1rem;
+}

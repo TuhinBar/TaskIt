@@ -34,3 +34,110 @@
   font-size: 2rem;
   color: var(--primary-color);
 }
+
+.tasksDiv {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.pendingTasks,
+.completedTasks,
+.inProgressTasks {
+  margin-top: 1rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 20px;
+  overflow-y: scroll;
+  max-height: 75vh;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
+.completedTasks::-webkit-scrollbar,
+.pendingTasks::-webkit-scrollbar,
+.inProgressTasks::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--light-color);
+}
+
+.completedTasks::-webkit-scrollbar-thumb,
+.pendingTasks::-webkit-scrollbar-thumb,
+.inProgressTasks::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  width: 5px;
+}
+
+.inProgressTasks div {
+  background-color: var(--secondary-color);
+
+  color: white;
+}
+
+.completedTasks div {
+  background-color: var(--primary-color);
+
+  color: white;
+}
+
+.task {
+  cursor: pointer;
+  margin-top: 0.5rem;
+  width: 70%;
+  /* height: 100px; */
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--light-color);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.task p {
+  font-size: 0.9rem;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: var(--light-color);
+  color: black;
+  height: full;
+}
+.task div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.task div span {
+  background-color: rgb(108, 116, 235);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border-radius: 10px;
+}
+.task small {
+  width: 80px;
+  font-size: 0.8rem;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgb(108, 116, 235);
+  color: white;
+  text-align: center;
+  font-style: italic;
+  /* padding: 5px; */
+}
+
+.task:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
+}

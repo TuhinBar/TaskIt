@@ -62,7 +62,7 @@
 }
 
 .inputDiv input {
-  width: 100%;
+  /* width: 100%; */
   border: 1px solid var(--primary-color);
   padding: 10px;
 

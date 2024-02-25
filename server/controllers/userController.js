@@ -108,12 +108,12 @@ const updateInvitation = async (req, res) => {
           $push: {
             members: {
               memberId: user._id,
-              memberEmail: user.email,
+              memberUserName: user.userName,
             },
           },
           $set: { "invitations.$[elem].status": "Accepted" },
         },
-        { arrayFilters: [{ "elem.inviteTo": user.email }] }
+        { arrayFilters: [{ "elem.inviteTo": user.userName }] }
       );
       const member = await User.findByIdAndUpdate(
         user?._id,
@@ -135,7 +135,7 @@ const updateInvitation = async (req, res) => {
         {
           $set: { "invitations.$[elem].status": "Rejected" },
         },
-        { arrayFilters: [{ "elem.inviteTo": user.email }] }
+        { arrayFilters: [{ "elem.inviteTo": user.userName }] }
       );
       const member = await User.findByIdAndUpdate(
         user?._id,

@@ -32,7 +32,7 @@ const QuickAccessBar = () => {
 
   useEffect(() => {
     dispatch(getAllTeams());
-    // console.log(teams);
+    console.log(teams);
   }, [dispatch]);
 
   const handleTeamCreate = (e) => {
@@ -66,7 +66,7 @@ const QuickAccessBar = () => {
         </div>
       </div>
       <div className={classes.teamsTabs}>
-        {teams ? (
+        {teams && teams.length > 0 ? (
           teams.map((team, index) => (
             <div
               key={index}

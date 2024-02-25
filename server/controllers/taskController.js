@@ -1,21 +1,19 @@
 const Task = require("../models/Task.model");
+const Team = require("../models/Team.model");
 const User = require("../models/User.model");
 
 const createTask = async (req, res) => {
   try {
-    const {
-      title,
-      description,
-      dueDate = Date.now(),
-      createdBy,
-      assignedTo,
-      team,
-    } = req.body;
+    let { title, description, dueDate, createdBy, assignedTo, team } = req.body;
 
     const userId = req.user._id;
 
     if (!title || !createdBy || !team) {
       return res.status(400).json({ message: "Please enter all fields" });
+    }
+
+    if (dueDate === "") {
+      dueDate = new Date();
     }
 
     const newTask = await Task.create({
@@ -33,6 +31,16 @@ const createTask = async (req, res) => {
         .json({ message: "Task not created", success: false });
     }
 
+    let taskAddedtoTeam = await Team.findByIdAndUpdate(
+      team,
+      {
+        $push: {
+          tasks: newTask._id,
+        },
+      },
+      { new: true }
+    );
+
     console.log("task created ==> ✔");
 
     res.status(201).json({ newTask, message: "Task created", success: true });
@@ -48,8 +56,8 @@ const getAllTasks = async (req, res) => {
     const { teamId } = req.query;
 
     const tasks = await Task.find({ team: teamId, isDeleted: false })
-      .populate("createdBy", "email profilePic")
-      .populate("assignedTo", "email profilePic")
+      .populate("createdBy")
+      .populate("assignedTo")
       .populate("team", "teamName");
 
     if (!tasks) {
@@ -69,16 +77,18 @@ const getAllTasks = async (req, res) => {
 const getTaskDetails = async (req, res) => {
   try {
     const { taskId } = req.query;
+    console.log("getTaskDetails ==> ✔", taskId);
 
     // currently is not incorporating isDeleted
     const task = await Task.findById(taskId)
-      .populate("createdBy", "email profilePic")
-      .populate("assignedTo", "email profilePic")
+      .populate("assignedTo")
+      .populate("createdBy")
       .populate("team", "teamName");
 
     if (!task) {
       return res.status(400).json({ message: "No task found", success: false });
     }
+    console.log("getTaskDetails ==> ✔", task);
 
     res.status(200).json({ task, success: true });
   } catch (error) {
@@ -113,7 +123,15 @@ const getAssignedToMeTasks = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const { taskId, status, assignedTo, isDeleted } = req.body;
+    const {
+      taskId,
+      title,
+      description,
+      dueDate,
+      status,
+      assignedTo,
+      isDeleted,
+    } = req.body;
 
     if (!taskId || status === undefined) {
       return res.status(400).json({ message: "Please enter all fields" });
@@ -124,6 +142,8 @@ const updateTask = async (req, res) => {
       {
         $set: {
           status,
+          title,
+          description,
           updatedAt: Date.now(),
           assignedTo,
           isDeleted: Boolean(isDeleted),
