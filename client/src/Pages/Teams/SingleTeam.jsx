@@ -8,6 +8,8 @@ import classes from "./Teams.module.css";
 import { MdDelete } from "react-icons/md";
 import ViewTask from "../../Componnets/Forms/ViewTask";
 import { updateTask } from "../../store/features/teamAction";
+import DeletePopup from "../../Componnets/Forms/DeletePopup";
+import { deleteTask } from "../../store/features/teamAction";
 
 const SingleTeam = () => {
   const dispatch = useDispatch();
@@ -18,6 +20,7 @@ const SingleTeam = () => {
   const [inProgressTasks, setInProgressTasks] = useState([]);
   const [completedTasks, setCompletedTasks] = useState([]);
   const [viewSingleTask, setViewSingleTask] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     if (singleTeam) {
@@ -48,6 +51,11 @@ const SingleTeam = () => {
     dispatch(updateTask(reData));
     setViewSingleTask(false);
   };
+
+  const handleTaskDelete = () => {
+    dispatch(deleteTask(singleTask._id));
+    setShowDeleteModal(false);
+  };
   return (
     <div className={classes.teamView}>
       <h1>Team {singleTeam?.teamName}</h1>
@@ -55,68 +63,77 @@ const SingleTeam = () => {
       <StatusBar />
       <div className={classes.tasksDiv}>
         <div className={classes.pendingTasks}>
-          {pendingTasks?.map((task) => (
-            <div
-              key={task._id}
-              draggable
-              onClick={() => {
-                setViewSingleTask(true);
-                dispatch(setSingleTask(task));
-              }}
-              className={classes.task}
-            >
-              <div>
-                <h3>{task.title}</h3>
-                <span>
-                  <MdDelete size={20} />
-                </span>
-              </div>
-              <p>{task.description}</p>
-              <small>{task.status}</small>
-            </div>
-          ))}
+          {pendingTasks?.map(
+            (task) =>
+              !task.isDeleted && (
+                <div
+                  key={task._id}
+                  draggable
+                  onClick={() => {
+                    setViewSingleTask(true);
+                    dispatch(setSingleTask(task));
+                  }}
+                  className={classes.task}
+                >
+                  <div>
+                    <h3>{task.title}</h3>
+                    <span onClick={() => setShowDeleteModal(true)}>
+                      <MdDelete size={20} />
+                    </span>
+                  </div>
+                  <p>{task.description}</p>
+                  <small>{task.status}</small>
+                </div>
+              )
+          )}
         </div>
         <div className={classes.inProgressTasks}>
-          {inProgressTasks?.map((task) => (
-            <div
-              key={task._id}
-              onClick={() => {
-                setViewSingleTask(true);
-                dispatch(setSingleTask(task));
-              }}
-              className={classes.task}
-            >
-              <div>
-                <h3>{task.title}</h3>
-                <span>
-                  <MdDelete size={20} />
-                </span>
-              </div>
-              <p>{task.description}</p>
-              <small>{task.status}</small>
-            </div>
-          ))}
+          {inProgressTasks?.map(
+            (task) =>
+              !task.isDeleted && (
+                <div
+                  key={task._id}
+                  onClick={() => {
+                    setViewSingleTask(true);
+                    dispatch(setSingleTask(task));
+                  }}
+                  className={classes.task}
+                >
+                  <div>
+                    <h3>{task.title}</h3>
+                    <span onClick={() => setShowDeleteModal(true)}>
+                      <MdDelete size={20} />
+                    </span>
+                  </div>
+                  <p>{task.description}</p>
+                  <small>{task.status}</small>
+                </div>
+              )
+          )}
         </div>
         <div className={classes.completedTasks}>
-          {completedTasks?.map((task) => (
-            <div
-              key={task._id}
-              onClick={() => {
-                setViewSingleTask(true);
-                dispatch(setSingleTask(task));
-              }}
-              className={classes.task}
-            >
-              <div>
-                <h3>{task.title}</h3>
-                <span>
-                  <MdDelete size={20} />
-                </span>
-              </div>
-              <p>{task.description}</p>
-              <small>{task.status}</small>
-            </div>
-          ))}
+          {completedTasks?.map(
+            (task) =>
+              !task.isDeleted && (
+                <div
+                  key={task._id}
+                  onClick={() => {
+                    setViewSingleTask(true);
+                    dispatch(setSingleTask(task));
+                  }}
+                  className={classes.task}
+                >
+                  <div>
+                    <h3>{task.title}</h3>
+                    <span onClick={() => setShowDeleteModal(true)}>
+                      <MdDelete size={20} />
+                    </span>
+                  </div>
+                  <p>{task.description}</p>
+                  <small>{task.status}</small>
+                </div>
+              )
+          )}
         </div>
       </div>
 
@@ -125,6 +142,12 @@ const SingleTeam = () => {
           task={singleTask}
           onSubmit={handleUpdateTask}
           onClose={() => setViewSingleTask(false)}
+        />
+      )}
+      {showDeleteModal && (
+        <DeletePopup
+          onDelete={handleTaskDelete}
+          onClose={() => setShowDeleteModal(false)}
         />
       )}
     </div>

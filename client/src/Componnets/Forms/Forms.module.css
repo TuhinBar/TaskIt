@@ -115,3 +115,17 @@
   margin-inline: auto;
   margin-top: 1rem;
 }
+
+.popup button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-inline: auto;
+  margin-top: 1rem;
+}

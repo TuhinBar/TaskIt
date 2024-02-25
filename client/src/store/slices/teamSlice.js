@@ -5,6 +5,7 @@ import {
   createTask,
   getTaskDetails,
   updateTask,
+  deleteTask,
 } from "../features/teamAction";
 
 const initialState = {
@@ -122,6 +123,23 @@ const teamSlice = createSlice({
     });
     builder.addCase(updateTask.rejected, (state, action) => {
       console.log("Update Task Failed", action.payload);
+      state.loading = false;
+      state.error = action.payload?.message;
+      state.success = false;
+    });
+    builder.addCase(deleteTask.pending, (state, action) => {
+      state.loading = true;
+      state.error = null;
+      state.success = false;
+    });
+    builder.addCase(deleteTask.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = null;
+      state.success = true;
+      console.log("Delete Task Success", action.payload);
+    });
+    builder.addCase(deleteTask.rejected, (state, action) => {
+      console.log("Delete Task Failed", action.payload);
       state.loading = false;
       state.error = action.payload?.message;
       state.success = false;

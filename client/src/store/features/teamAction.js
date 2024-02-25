@@ -79,3 +79,17 @@ export const updateTask = createAsyncThunk(
     }
   }
 );
+
+export const deleteTask = createAsyncThunk(
+  "task/delete",
+  async (data, { rejectWithValue }) => {
+    try {
+      console.log(data);
+      const response = await axios.delete(`/teams/delete-task?taskId=${data}`);
+      return response.data;
+    } catch (error) {
+      console.log("Delete Task Failed", error.response.data);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
